@@ -1,0 +1,59 @@
+package com.kh.spring.member.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.kh.spring.member.model.vo.Member;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class MemberController {
+	
+	//JSP / servlet
+	/*
+	 * @RequestMapping("login.do")
+	 * public String login(HttpServletRequest request) {
+	 * 
+	 * String userId = request.getParameter("id"); String userPw =
+	 * request.getParameter("pw");
+	 * 
+	 * log.info("입력한 아이디 : {}", userId); log.info("입력한 비밀번호 : {}", userPw);
+	 * 
+	 * return "main"; }
+	 */
+	
+	
+	/*
+	 * @RequestMapping("login.do") 
+	 * public String login(@RequestParam("id") String userId, @RequestParam("pw") String userPw) {
+	 * 
+	 * log.info("입력한 아이디 : {}", userId); log.info("입력한 비밀번호 : {}", userPw);
+	 * 
+	 * return "main"; }
+	 */
+	
+
+	//어노테이션 생략
+	/*
+	 * @RequestMapping("login.do") 
+	 * public String login(String id, String pw) {
+	 * 
+	 * log.info("입력한 아이디 : {}", id); log.info("입력한 비밀번호 : {}", pw);
+	 * 
+	 * Member member = new Member();
+	 * member.setUserId(id); 
+	 * member.setUserPw(pw);
+	 * 
+	 * return "main"; }
+	 */
+	
+	
+	//커멘드 객체(ModelAttribute) ; 겍체명과 jsp의 name 속성값 일치
+	@RequestMapping("login.do")
+	public String login(Member member) {
+		
+		return "main";
+	}
+}

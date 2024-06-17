@@ -1,0 +1,5 @@
+package com.kh.spring.string.hash.model.vo;
+
+public class Student {
+
+}

@@ -1,0 +1,23 @@
+package com.kh.spring.member.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class MemberController {
+	
+	@RequestMapping("login.do")
+	public String login(HttpServletRequest request) {
+		
+		String userId = request.getParameter("id");
+		String userPw = request.getParameter("pw");
+				
+		log.info("입력한 아이디 : {}", userId);
+		log.info("입력한 비밀번호 : {}", userPw);
+	}
+}
