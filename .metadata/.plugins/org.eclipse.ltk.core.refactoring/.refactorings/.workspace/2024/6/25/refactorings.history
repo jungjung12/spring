@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;springProject/src/main/webapp/WEB-INF/spring/spring-security.xml&apos;" deleteContents="false" description="Delete resource &apos;springProject/src/main/webapp/WEB-INF/spring/spring-security.xml&apos;" element1="/springProject/src/main/webapp/WEB-INF/spring/spring-security.xml" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1718676203820"/>
+</session>

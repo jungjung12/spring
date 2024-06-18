@@ -2,7 +2,10 @@ package com.kh.spring.member.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private final MemberService memberService;
+	private final BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	//JSP / servlet
 	/*
@@ -100,7 +104,7 @@ public class MemberController {
 		
 		Member loginUser = memberService.login(member);
 		
-		if(loginUser != null) {
+		if(loginUser != null && bcryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			 mv.setViewName("redirect:/");
 	         
@@ -109,10 +113,80 @@ public class MemberController {
 	      }
 	      return mv;
 		}
+
+
+	@GetMapping("logout.do")
+	public String logout(HttpSession session) {
+		
+		session.removeAttribute("loginUser");
+		
+		return "redirect:/";
 	}
-
 	
+	@GetMapping("enroll.do")
+	public String enroll() {
+		
+		return "member/enrollform";
+	}
+	
+	@PostMapping("join.do")
+	public String join(Member member, Model model) {
+		
+		/* log.info("회원 정보 : {}", member); */
+		//log.info("평문 : {}", member.getUserPwd());
+		
+		String encPwd = bcryptPasswordEncoder.encode(member.getUserPwd());
+		
+		//log.info("암호화 : {}", encPwd);
+		
+		member.setUserPwd(encPwd);	//insert 할 member 객체에 pw 값을 암호화 해서 담기
 
+		String viewName = "";
+		
+		if(memberService.insert(member) > 0) {	//정수 값 - insert가 몇 개나 수행되었는지 1 or 0
+		
+			viewName = "redirect:/";
+			
+		} else {
+		
+			model.addAttribute("errorMsg", "회원가입 실패");
+		
+			viewName = "common/errorPage";
+		
+		}
+		
+		return viewName;
+	}
+	
+	@GetMapping("mypage.do")
+	public String mypage(Member member) {
+		
+		return "member/myPage";
+	}
+	
+	@PostMapping("update.do")
+	public String update(Member member, Model model) {
+		
+		//log.info("정보 수정 : {}", member);
+		
+		if(memberService.update(member) > 0) {
+			
+			memberService.login(member);
+			
+			return "redirect:mypage.do";
+			
+		} else {
+			
+			model.addAttribute("errorMsg", "업데이트 실패");
+			
+			return "common/errorPage";
+			
+		}
+		
+		return null;
+	}
+	
+}
 	
 	/*
 	 * @GetMapping("/member/{id}") public void restTest(@PathVariable String id) {

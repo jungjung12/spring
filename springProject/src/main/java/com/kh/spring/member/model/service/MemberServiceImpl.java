@@ -30,12 +30,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int insert(Member member) {
-		return 0;
+		
+		return memberrepository.insert(sqlSession, member);
 	}
 
 	@Override
 	public int update(Member member) {
-		return 0;
+		
+		return memberrepository.upadte(sqlSession, member);
 	}
 
 	@Override

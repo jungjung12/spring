@@ -20,11 +20,51 @@
 			  MEMBER
 		 WHERE
 		 	  USER_ID = #{userId}
-		   AND
-		   	  USER_PWD = #{userPwd}
+		   <!-- AND
+		   	  USER_PWD = #{userPwd} -->
 		   AND
 		      STATUS = 'Y'
 	</select>
 
+	<insert id="insert" parameterType="member">
+		INSERT
+		  INTO
+		  	  MEMBER
+			  (
+			  USER_ID,
+			  USER_PWD,
+			  USER_NAME,
+			  EMAIL,
+			  AGE,
+			  PHONE,
+			  ADDRESS,
+			  GENDER
+			  )
+		VALUES
+			  (
+			  #{userId},
+			  #{userPwd},
+			  #{userName},
+			  #{email},
+			  #{age},
+			  #{phone},
+			  #{address},
+			  #{gender}
+			  )
+	</insert>
 
+	<update id="update" parameterType="member">
+		UPDATE
+			  MEMBER
+		   SET
+		   	  USER_NAME = #{userName},
+			  EMAIL = #{email},
+			  AGE = #{age},
+			  PHONE = #{phone},
+			  ADDRESS = #{address},
+			  GENDER = #{gender},
+			  MODIFY_DATE = SYSDATE
+		WHERE
+			 USER_ID = #{userId}
+	</update>
 </mapper>
