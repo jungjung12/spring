@@ -17,7 +17,11 @@ public class MemberRepository {
 		return sqlSession.insert("memberMapper.insert", member);
 	}
 
-	public int upadte(SqlSessionTemplate sqlSession, Member member) {
-		return sqlSession.update("memberMapper.update", member);
+	public int upadte(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.update("memberMapper.update", userId);
+	}
+	
+	public int delete(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.update("mwmberMapper.delete", userId);
 	}
 }

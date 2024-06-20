@@ -1,0 +1,22 @@
+package com.kh.spring.board.model.service;
+
+public class boardService {
+
+	//게시글 전체 조회
+	
+	List<Board> findAll();
+	
+	//게시글 작성
+	
+	//게시글 상세 조회
+	
+	//게시글 수정
+	
+	//게시글 삭제
+	
+	/* 댓글 기능 */
+	
+	//AJAX, Mybatis를 이용한 댓글 조회
+	
+	//댓글 작성
+}

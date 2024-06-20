@@ -1,0 +1,59 @@
+package com.kh.spring.board.model.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.kh.spring.board.vo.Board;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class BoardServiceImpl implements BoardService {
+
+	
+	private final BordRepository boardRepository;
+	
+	@Override
+	public int boardCount() {
+		return 0;
+	}
+
+	@Override
+	public List<Board> findAll() {
+		return null;
+	}
+
+	@Override
+	public List<Board> serchAll() {
+		return null;
+	}
+
+	@Override
+	public int insert(Board board) {
+		return 0;
+	}
+
+	@Override
+	public int increaseCount(int boardNo) {
+		return 0;
+	}
+
+	@Override
+	public Board findById(int boardNo) {
+		return null;
+	}
+
+	@Override
+	public int update(Board board) {
+		return 0;
+	}
+
+	@Override
+	public int delete(int boardNo) {
+		return 0;
+	}
+
+	
+}

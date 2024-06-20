@@ -1,0 +1,14 @@
+package com.kh.spring.board.vo;
+
+public class Board {
+
+	private int boardNo;
+	private String boardTitle;
+	private String boardWriter;
+	private String boardCount;
+	private String originName;
+	private String changeName;
+	private int count;
+	private String createDate;
+	private String status;
+}

@@ -78,7 +78,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <form action="" method="post">
+                <form action="delete.do" method="post">
+                	<!-- 같은 조건의 pwd 값을 가진 모든 유저가 삭제 될 수 있으므로 행을 식별할 수 있는 값을 추가 -->
+                	<input type="hidden" value="${ sessionScope.loginUser.userId }" name="userId">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div align="center">
@@ -87,13 +89,34 @@
                         </div>
                         <br>
                             <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name=""> <br>
+                            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="userPwd"> <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <button type="submit" class="btn btn-danger" onclick="return deletePrompt();">탈퇴하기</button>
                     </div>
                 </form>
+                <script>
+                	function deletePrompt() {
+                		
+                		
+						
+                		// console.log(value);
+                		
+                	/* 	
+                		const value = prompt('탈퇴를 원하시면 "회원탈퇴"를 정확하게 입력해주세요.');
+                		
+                		//submit 요청을 보내고 싶을 때
+                		if(value === '회원탈퇴') {
+                			return true;
+                		}//submit 요청을 보내고싶지 않을 때
+                		else {
+                			return false;
+                		} */
+                		
+                		return prompt('탈퇴를 원하시면 "회원탈퇴"를 정확하게 입력해주세요.') === '회원탈퇴' ? true : false
+					}
+                </script>
             </div>
         </div>
     </div>

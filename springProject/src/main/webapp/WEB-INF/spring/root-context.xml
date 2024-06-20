@@ -18,4 +18,10 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
+	<!-- maxUploadSize : 업로드 가능한 최대 크기
+		 maxInMemorySize : 한번에 올릴 수 있는 파일의 최대 크기 -->
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<property name="maxUploadSize" value="10000000" />
+		<property name="maxInMemorySize" value="10000000" />
+	</bean>
 </beans>

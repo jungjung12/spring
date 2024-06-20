@@ -67,4 +67,13 @@
 		WHERE
 			 USER_ID = #{userId}
 	</update>
+	<update id="delete" >
+		UPDATE
+			  MEMBER
+		   SET
+		   	  STATUS = 'N',
+		   	  MODIFY_DATE = SYSDATE
+		 WHERE
+		   	  USER_ID = #{userId}
+	</update>
 </mapper>

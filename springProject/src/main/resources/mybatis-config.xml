@@ -8,8 +8,10 @@
   </settings>
   <typeAliases>
   	<typeAlias type="com.kh.spring.member.model.vo.Member" alias="member"/>
+  	<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board"/>
   </typeAliases>
   <mappers>
   	<mapper resource="/mapper/memberMapper.xml"/>
+  	<mapper resource="/mapper/boardMapper.xml" />
   </mappers>
 </configuration>

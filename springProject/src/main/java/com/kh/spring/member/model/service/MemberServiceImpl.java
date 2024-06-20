@@ -41,8 +41,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int delete(Member member) {
-		return 0;
+	public int delete(String userId) {
+		return memberrepository.upadte(sqlSession, userId);
 	}
 
 	
