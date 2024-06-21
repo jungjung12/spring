@@ -1,6 +1,9 @@
 package com.kh.spring.board.model.service;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
 
 import com.kh.spring.board.model.vo.Board;
 
@@ -11,11 +14,15 @@ public interface BoardService {
 	
 	//게시들 목록 조회
 	
-	List<Board> findAll();
+	List<Board> findAll(Map <String, Integer> map);
+	
+	//검색 기능
+	
+	int searchCount(Map<String, String> map);
 	
 	//검색 목록 조회
 	
-	List<Board> serchAll();
+	List<Board> findByConditionAndKeyword(Map <String, String> map, RowBounds rowBounds);
 	
 	//게시글 작성
 	

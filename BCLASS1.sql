@@ -40,3 +40,20 @@
                          BOARD_NO DESC))
       WHERE
             RNUM BETWEEN 1 AND 10;
+            
+            
+    -- 조건에 부합하는 행의 개수 알아내기
+    
+    SELECT
+           COUNT(BOARD_NO)
+      FROM
+           BOARD
+    WHERE 
+          STATUS = 'Y'
+      AND
+          BOARD_WRITER LIKE '%' || 'u' || '%'
+      AND
+          BOARD_TITLE LIKE '%' || 'Java' || '%'
+      AND
+          BOARD_CONTENT LIKE '%' || 'u' || '%'
+      

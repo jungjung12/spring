@@ -207,17 +207,15 @@ public class MemberController {
 				return "redirect:/";
 			}
 			
-		else {
-			model.addAttribute("errorMsg", "회원 탈퇴 실패");
-			return "common/errorPage";
-		} 
+			else {
+				model.addAttribute("errorMsg", "회원 탈퇴 실패");
+				return "common/errorPage";
+			} 
+		}
 		else {
 			
 			session.setAttribute("alertMsg", "비밀번호를 다시 확인해주세요.");
 			return "redirect:mypag.do";
-			
-		}
-		
 		}
 	}
 	
