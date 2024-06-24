@@ -97,7 +97,7 @@
 	                   <c:choose>
 	                    	<c:when test="${ empty condition }">
 		                   		<li class="page-item">
-		                   			<a class="page-link" href="boardList?page=${p }" >${p }</a>
+		                   			<a class="page-link" href="noticeList?page=${p }" >${p }</a>
 		                   		</li>
 	                   		</c:when>
 	                   		<c:otherwise>

@@ -83,7 +83,7 @@ public class NoticeController {
 		map.put("startValue", startValue);
 		map.put("endValue", endValue);
 		
-		List<Notice> noticeList = noticeService.noticeAll();
+		List<Notice> noticeList = noticeService.noticeAll(map);
 		
 		model.addAttribute("list", noticeList);
 		model.addAttribute("pageInfo", pageInfo);
@@ -117,5 +117,14 @@ public class NoticeController {
 			
 			return "common/errorPage";
 		}
+	}
+	
+	
+	
+	@GetMapping("noticeUpdateForm")
+	public String noticeUpdateForm() {
+		
+		return "notice/updateForm";
+		
 	}
 }
