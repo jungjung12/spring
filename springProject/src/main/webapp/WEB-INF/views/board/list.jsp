@@ -68,7 +68,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                
+                <!-- <tr> 태그에 onclick 속성 부여 -> onclick="location.href='board-detail?boardNo=${board.boardNo}'" -->
                 <c:choose>
                 	<c:when test="${list.size() == 0 }">
                 		<tr>
@@ -77,7 +77,7 @@
                 	</c:when>
                 	<c:otherwise>
 	                	<c:forEach items="${ list }" var="board">
-	                		<tr>
+	                		<tr class="board-detail" id="board-${board.boardNo }">
 		                 		<td>${board.boardNo }</td>
 		                 		<td>${board.boardTitle }</td>
 		                 		<td>${board.boardWriter }</td>
@@ -95,12 +95,42 @@
                 </tbody>
             </table>
             <br>
-
+			<script>
+				$(() => {
+					
+					$('.board-detail').click(e => {
+						// URL 변경 : location href 속성 변경
+						// console.log(window); *JS의 window = JAVA의 Object 클래스
+						// console.log(e.target);	*내가 클릭한 지점
+						// console.log(e.currentTarget);
+						// JS 방식의 요소 선택 : console.log(e.currentTarget)
+						// JQeury 방식의 요소 선택 : console.log($(e.currentTarget)); > 자식 요소 선택 시 처음과 마지막만 선택 가능
+						// --> eq() : 요소의 위치를 전달 가능 >> eq(3) : 3번째 요소를 전달 가능
+						// 각각의 제공하는 메소드를 사용하려면 지정 방식도 동일해야 함
+						
+						// console.log($(e.currentTarget).children().eq(0).text());
+						location.href = 'board-detail?boardNo= ' + e.currentTarget.id.split('-')[1];
+						
+					});
+				})
+			
+			</script>
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled">
-                    <a class="page-link" href="#">이전</a>
-                    </li>
+                
+	                	<c:choose>
+	                		<c:when test="">
+                			 	<li class="page-item disabled">
+			                    	<a class="page-link" href="#">이전</a>
+		                   		</li>
+                			</c:when>
+                			<c:otherwise>
+                				<li class="page-item disabled">
+			                    	<a class="page-link" href="#">이전</a>
+		                   		</li>
+                			</c:otherwise>
+                		</c:choose>
+                   
                     
                    	<c:forEach begin="${pageInfo.startPage }" end="${pageInfo.endPage }" var="p">
                    	

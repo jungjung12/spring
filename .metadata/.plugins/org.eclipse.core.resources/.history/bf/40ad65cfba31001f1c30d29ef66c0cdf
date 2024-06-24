@@ -1,0 +1,50 @@
+package com.kh.spring.notice.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.kh.spring.notice.model.service.NoticeService;
+import com.kh.spring.notice.model.vo.Notice;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@RequiredArgsConstructor
+@Slf4j
+public class NoticeController {
+
+	private final NoticeService noticeService;
+	
+	@GetMapping("noticeList")
+	public String noticeList(Notice notice, Model model) {
+		
+		List<Notice> noticeList = noticeService.noticeAll();
+		
+		model.addAttribute("list", noticeList);
+		
+		return "notice/list";
+	}
+	
+	@GetMapping("noticeForm")
+	public String noticeForwording() {
+		
+		return "notice/insertForm";
+	}
+	
+	@PostMapping("insert")
+	public String insert(Notice notice, HttpSession session) {
+		
+		//log.info("입력한 정보 : {}", notice);
+		
+		noticeService.insert();
+		
+		return "";
+	}
+}

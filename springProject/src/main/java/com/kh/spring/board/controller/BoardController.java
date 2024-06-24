@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.board.model.service.BoardService;
 import com.kh.spring.board.model.vo.Board;
@@ -53,7 +54,7 @@ public class BoardController {
 		// currentPage : 현재 페이지(사용자가 요청한 페이지)
 		currentPage = page;
 		
-		log.info("게시글 수 : {}", listCount, currentPage);
+		// log.info("게시글 수 : {}", listCount, currentPage);
 		
 		// pageLimit : 페이지 하단에 보여질 페이징 바의 최대 갯수
 		pageLimit = 10;
@@ -89,7 +90,7 @@ public class BoardController {
 		
 		endPage = startPage + pageLimit - 1;
 		
-		if(endPage>maxPage) endPage = maxPage;
+		//if(endPage>maxPage) endPage = maxPage;
 		/* @AllArgsConstructor만 사용
 		 * PageInfo pageInfo = new
 		 * PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage
@@ -186,8 +187,10 @@ public class BoardController {
 	@PostMapping("insert.do")
 	public String insert(Board board, HttpSession session, MultipartFile upfile) {
 		
-		log.info("게시글 정보 : {}", board);
-		log.info("파일 정보 : {}", upfile);
+		/*
+		 * log.info("게시글 정보 : {}", board);
+		 * log.info("파일 정보 : {}", upfile);
+		 */
 		
 		//첨부파일 존재 여부 확인
 		//Multipart는 무조건 생성 -> fileName 필드에 원본명이 들어있는지 여부 확인
@@ -196,34 +199,37 @@ public class BoardController {
 		if(!upfile.getOriginalFilename().equals("")) {
 			//파일이 존재하면 업로드
 			//서버에 업로드될 파일명을 바꿔서 업로드
-			String originName = upfile.getOriginalFilename();
+			/*
+			 * String originName = upfile.getOriginalFilename();
+			 * 
+			 * //확장자 앞의 "." 얻기 String ext =
+			 * originName.substring(originName.lastIndexOf("."));
+			 * 
+			 * //int num = (int)(Math.random() * 값의 범위) + 시작값; int num = (int)(Math.random()
+			 * * 100) + 1;
+			 * 
+			 * //new SimpleDateFormat() String currentTime = new
+			 * SimpleDateFormat("yyyyMMDDHHmmss").format(new Date());
+			 * 
+			 * String savePath =
+			 * session.getServletContext().getRealPath("/resources/uploardFiles/");
+			 * 
+			 * String changeName = "KH_" + currentTime + "_" + num + ext;
+			 * 
+			 * try { upfile.transferTo(new File(savePath + changeName)); } catch
+			 * (IllegalStateException e) { e.printStackTrace(); } catch (IOException e) {
+			 * e.printStackTrace(); }
+			 * board.setOriginName(originName);
+			board.setChangeName("resources/uploardFiles/" + changeName);
+			 */
 			
-			//확장자 앞의 "." 얻기
-			String ext = originName.substring(originName.lastIndexOf("."));
-			
-			//int num = (int)(Math.random() * 값의 범위) + 시작값;
-			int num = (int)(Math.random() * 100) + 1;
-			
-			//new SimpleDateFormat()
-			String currentTime = new SimpleDateFormat("yyyyMMDDHHmmss").format(new Date());
-			
-			String savePath = session.getServletContext().getRealPath("/resources/uploardFiles/");
-			
-			String changeName = "KH_" + currentTime + "_" + num + ext;
-			
-			try {
-				upfile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			saveFile(upfile, session);
 			
 			//첨부파일이 존재할 경우 -> Board 객체에 originName, changeName을 담아준다.
-			board.setOriginName(originName);
-			board.setChangeName(savePath + changeName);
+			board.setOriginName(upfile.getOriginalFilename());
+			board.setChangeName(saveFile(upfile, session));
 			
-			boardService.insert(board);
+			//boardService.insert(board);
 			
 			if(boardService.insert(board) > 0) {
 				
@@ -242,6 +248,129 @@ public class BoardController {
 		}
 		
 		return "redirect:boardForm.do";
+	}
+	
+	@GetMapping("board-detail")
+	public ModelAndView findByBoardNo(int boardNo, ModelAndView mv) {
+		
+		//boardService.increaseCount(boardNo);
+		
+		if(boardService.increaseCount(boardNo) > 0) {
+			
+			mv.addObject("board", boardService.findById(boardNo)).setViewName("board/boardDetail");
+			
+		} else {
+			
+			mv.addObject("errorMsg", "게시글 상세 조회 실패").setViewName("common/errorPage");
+			
+		}
+		return mv;
+	}
+	
+	/*
+	 * deleteById : Client에세 정수형의 boardNo를 전달받아 Board 테이블에 있는 정보를 update
+	 * 
+	 * @param filePath : 요청 처리 시 첨부파일을 제거하기 위해 파일이 저되어 있는 경로 및 파일명
+	 * @param boardNo : 각 행을 식별하기 위한 PK
+	 * 
+	 * @return : 반환된 view의 논리적인 경로
+	 * 
+	 * */
+	
+	@PostMapping("boardDelete.do")
+	public String deleteById(int boardNo, String filePath, HttpSession session, Model model) {
+		
+		if(boardService.deleteById(boardNo) > 0) {
+			
+			//if(!filePath.equals("")) > 문자열 비교 기준을 filePath로 잡으면 input 요소의 name 값과 상이할 때 빈 문자열이 아닌, null 값이 들어가 버리기 때문에 NullPointExetion 발생률이 증가
+			if(!"".equals(filePath)) {
+				
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "게시글 삭제 성공");
+			return "redirect:boardList";
+
+			
+		} else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			
+			return "common/errorPage";
+			
+		}
+		
+	}
+	
+	@PostMapping("boardUpdateForm.do")
+	public ModelAndView updateForm(ModelAndView mv, int boardNo) {
+		
+		mv.addObject("board", boardService.findById(boardNo)).setViewName("board/boardUpdate");
+		
+		return mv;
+	}
+	
+	@PostMapping("board-update.do")
+	public String update(Board board, MultipartFile reUpFile, HttpSession session) {
+		
+		/*
+		 * 파일 정보 update
+		 * 
+		 * 1. 기존 파일 X, 새로운 파일 X -> 그대로 update
+		 * 2. 기존 파일 O, 새로운 파일 X -> origin : 기존 파일 이름, change : 기존 파일 경로
+		 * 2. 기존 파일 X, 새로운 파일 O -> origin : 새로운 파일 이름, change : 새로운 파일 경로
+		 * 2. 기존 파일 O, 새로운 파일 O -> origin : 새로운 파일 이름, change : 새로운 파일 경로
+		 * 
+		 * */
+		
+		// 새로운 첨부파일이 존재하는지 여부 확인
+		
+		if(!reUpFile.getOriginalFilename().equals("")) {
+			
+			board.setOriginName(reUpFile.getOriginalFilename());
+			board.setChangeName(saveFile(reUpFile, session));
+			
+		}
+		
+		if(boardService.update(board) > 0) {
+			
+			session.setAttribute("alertMsg", "수정 성공");
+			return "redirect:board-detail?boardNo="+board.getBoardNo();
+		} else {
+			
+			session.setAttribute("errorMsg", "수정 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	// 중복코드 방지용 -> 밖에 메소드로 빼두고 핑료한 곳에서 사용
+	
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		String originName = upfile.getOriginalFilename();
+		
+		//확장자 앞의 "." 얻기
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		//int num = (int)(Math.random() * 값의 범위) + 시작값;
+		int num = (int)(Math.random() * 100) + 1;
+		
+		//new SimpleDateFormat()
+		String currentTime = new SimpleDateFormat("yyyyMMDDHHmmss").format(new Date());
+		
+		String savePath = session.getServletContext().getRealPath("/resources/uploardFiles/");
+		
+		String changeName = "KH_" + currentTime + "_" + num + ext;
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "resources/uploardFiles/" + changeName;
 	}
 	
 	

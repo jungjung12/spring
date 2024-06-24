@@ -73,6 +73,7 @@
                 <br>
 				<script>
 				
+				// 닫는 부분 오류 -> 닫기 이상하뮤
 				function loadImg(inputFile) {
                     
                     //inputFile : 현재 change가 일어난 <input type="file"> 요소 객체
@@ -106,7 +107,6 @@
                        
                     } else {
                        document.getElementById('preImage').src = "https://t1.kakaocdn.net/friends/www/talk/kakaofriends_talk_2018.png";
-                    }
                     
                     
                  }
@@ -146,10 +146,9 @@
 							document.getElementById('kakao').src = "https://t1.kakaocdn.net/friends/www/talk/kakaofriends_talk_2018.png";
 							
 							
-						}
 					}
 					
-				} */
+					
 				
 				</script>
                 <div align="center">

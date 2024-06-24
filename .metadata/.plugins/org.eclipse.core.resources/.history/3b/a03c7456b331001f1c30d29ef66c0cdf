@@ -1,0 +1,6 @@
+package com.kh.spring.notice.controller;
+
+@Controller
+public class NoticeController {
+
+}

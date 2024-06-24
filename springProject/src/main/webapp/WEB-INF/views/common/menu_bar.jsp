@@ -99,7 +99,7 @@
         <div id="header_2">
             <ul>
                 <li><a href="WEB-INF/views/main.jsp">HOME</a></li>
-                <li><a href="">공지사항</a></li>
+                <li><a href="noticeList">공지사항</a></li>
                 <li><a href="boardList">자유게시판</a></li>
                 <li><a href="">사진게시판</a></li>
             </ul>

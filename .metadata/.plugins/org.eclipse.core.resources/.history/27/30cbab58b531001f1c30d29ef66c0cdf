@@ -1,0 +1,16 @@
+package com.kh.spring.notice.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.kh.spring.notice.model.vo.Notice;
+
+@Controller
+public class NoticeController {
+
+	@GetMapping("noticeList")
+	public String noticeList(Notice notice) {
+		
+		return "notice/list";
+	}
+}
