@@ -72,83 +72,43 @@
                 </table>
                 <br>
 				<script>
-				
-				// 닫는 부분 오류 -> 닫기 이상하뮤
 				function loadImg(inputFile) {
-                    
-                    //inputFile : 현재 change가 일어난 <input type="file"> 요소 객체
-                    //console.log(inputFile);
-                    
-                    //files 속성 : 업로드된 파일의 정보가 들어있음
-                    //console.log(inputFile.files);
-                    
-                    //inputFile.files.length : 1 == 파일 첨부 , 0 == 첨부 취소 
-                    // 파일 첨부 시 inputFile.files[0]에 선택된 파일의 정보가 있음
-                    
-                    if(inputFile.files.length) { //파일이 첨부
-                    
-                       //선택된 파일을 읽어서 영역에 미리보기 해야 함
-                       //파일을 읽어들일 FileReader 객체 생성
-                       const reader = new FileReader();
-                    
-                       //reader 객체를 통해 파일을 읽어들이는 메서드 호출
-                       reader.readAsDataURL(inputFile.files[0]);
-                       
-                       // 해당 파일을 read 하는 순간 파일만의 고유한 거어어어어어ㅓ엉ㅂ나 긴 url이 생성됨
-                       // 해당 url을 src 속성의 값으로 부여
-                       
-                       //파일 읽기가 완료되면 실행할 핸들러 정의
-                       //이벤트 종류 : event type
-                       //이벤트 발생 타겟 : event target
-                       //이벤트 발생으로 처리되는 코드 : event handler
-                       reader.onload = e => {
-                          document.getElementById('preImage').src = e.target.result;
-                       };
-                       
-                    } else {
-                       document.getElementById('preImage').src = "https://t1.kakaocdn.net/friends/www/talk/kakaofriends_talk_2018.png";
-                    
-                    
-                 }
-				/* function loadImg(inputFile) {
+				
+				/* inputFile : 현재 change가 일어난 <input type="file" 요소 객체>
+				console.log(inputFile); */
+				
+				/* console.log(inputFile.files);
+				files : 업로드된 파일의 정보가 들어있음
+				inputFile.files.length : 1 == 파일 첨부 / 0 == 첨부 취소 -> 파일의 존재 유무를 알 수 있음 */
+				
+				if(inputFile.files.length) { //파일이 첨부되었으면
 					
-					/* inputFile : 현재 change가 일어난 <input type="file" 요소 객체>
-					console.log(inputFile); */
+					//선택된 파일을 읽어서 영역에 미리 보기
+					//파일을 읽어들일 FileReader 객체 생성
 					
-					/* console.log(inputFile.files);
-					files : 업로드된 파일의 정보가 들어있음
-					inputFile.files.length : 1 == 파일 첨부 / 0 == 첨부 취소 -> 파일의 존재 유무를 알 수 있음 */
+					const reader = new FileReader();
+				
+					reader.readAsDataURL(inputFile.files[0]);
 					
-					if(inputFile.files.length) { //파일이 첨부되었으면
-						
-						//선택된 파일을 읽어서 영역에 미리 보기
-						//파일을 읽어들일 FileReader 객체 생성
-						
-						const reader = new FileReader();
+					//해당 파일을 read 하면 파일만의 고유한 아주 긴 url이 생성
+					//위 url을 src 속성의 값으로 부여
 					
-						reader.readAsDataURL(inputFile.files[0]);
-						
-						//해당 파일을 read 하면 파일만의 고유한 아주 긴 url이 생성
-						//위 url을 src 속성의 값으로 부여
-						
-						//파일 일기가 완료되면 실행할 핸들러 정의
-						reader.onload = e => {
+					//파일 읽기가 완료되면 실행할 핸들러 정의
+					reader.onload = e => {
 
-							//e.target -> eventTarget
-							//console.log(e.target)
-							
-							document.getElementById('kakao').src = e.target.result;
-							
-						};
+						//e.target -> eventTarget
+						//console.log(e.target)
 						
-					} else {
-							
-							document.getElementById('kakao').src = "https://t1.kakaocdn.net/friends/www/talk/kakaofriends_talk_2018.png";
-							
-							
-					}
+						document.getElementById('kakao').src = e.target.result;
+						
+					};
 					
-					
+				} else {
+						
+						document.getElementById('kakao').src = "https://t1.kakaocdn.net/friends/www/talk/kakaofriends_talk_2018.png";
+						
+						
+				}
 				
 				</script>
                 <div align="center">

@@ -51,7 +51,9 @@
             <h2>게시판</h2>
             <br>
             <!-- 관리자 계정일 경우만 보여지는 글쓰기 버튼 -->
+            <c:if test="${loginUser.userId.equals('admin') }">
             	<a class="btn btn-secondary" style="float:right;" href="noticeForm">글쓰기</a>
+            </c:if>
             <br>
             <br>
             <table id="boardList" class="table table-hover" align="center">

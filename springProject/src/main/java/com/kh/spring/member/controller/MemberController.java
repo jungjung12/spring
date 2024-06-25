@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.member.model.service.MemberService;
@@ -217,6 +218,24 @@ public class MemberController {
 			session.setAttribute("alertMsg", "비밀번호를 다시 확인해주세요.");
 			return "redirect:mypag.do";
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping("idCheck.go")
+	public String idCheck(String checkId) {
+		
+		int result = memberService.idCheck(checkId);
+		
+		/*
+		 * if(result > 0 ) {
+		 * 
+		 * return "NNNNN"; } else { return "NNNNY"; }
+		 */
+		
+		// return result > 0? "NNNNN" : "NNNNY";
+		
+		return memberService.idCheck(checkId) > 0? "NNNNN" : "NNNNY"; 
+		
 	}
 	
 }

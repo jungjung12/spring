@@ -65,5 +65,12 @@ public class BoardServiceImpl implements BoardService {
 		return boardRepository.deleteById(sqlSession, boardNo);
 	}
 
+	@Override
+	public List selectImages() {
+		return boardRepository.selectImages(sqlSession);
+	}
+	
+	
+
 
 }

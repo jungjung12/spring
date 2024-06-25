@@ -42,7 +42,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int delete(String userId) {
-		return memberrepository.upadte(sqlSession, userId);
+		return memberrepository.delete(sqlSession, userId);
+	}
+
+	@Override
+	public int idCheck(String checkId) {
+		return memberrepository.idCheck(sqlSession, checkId);
 	}
 
 	

@@ -185,7 +185,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("insert.do")
-	public String insert(Board board, HttpSession session, MultipartFile upfile) {
+	public String insert(Board board, HttpSession session, MultipartFile upfile, Model model) {
 		
 		/*
 		 * log.info("게시글 정보 : {}", board);
@@ -223,12 +223,11 @@ public class BoardController {
 			board.setChangeName("resources/uploardFiles/" + changeName);
 			 */
 			
-			saveFile(upfile, session);
-			
 			//첨부파일이 존재할 경우 -> Board 객체에 originName, changeName을 담아준다.
 			board.setOriginName(upfile.getOriginalFilename());
 			board.setChangeName(saveFile(upfile, session));
 			
+		}
 			//boardService.insert(board);
 			
 			if(boardService.insert(board) > 0) {
@@ -240,14 +239,12 @@ public class BoardController {
 				
 			} else {
 				
-				session.setAttribute("errorMsg", "작성 실패");
+				model.addAttribute("errorMsg", "작성 실패");
 				
 				return "common/errorPage";
-				
 			}
-		}
 		
-		return "redirect:boardForm.do";
+		
 	}
 	
 	@GetMapping("board-detail")
@@ -373,5 +370,14 @@ public class BoardController {
 		return "resources/uploardFiles/" + changeName;
 	}
 	
+	@GetMapping("image-board")
+	public String images(Model model) {
+		
+		// List<Board> images = boardService.selectImages();
+		
+		model.addAttribute("board", boardService.selectImages());
+				
+		return "board/imageList";
+	}
 	
 }

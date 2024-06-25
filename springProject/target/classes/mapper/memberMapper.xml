@@ -67,6 +67,7 @@
 		WHERE
 			 USER_ID = #{userId}
 	</update>
+	
 	<update id="delete" >
 		UPDATE
 			  MEMBER
@@ -76,4 +77,17 @@
 		 WHERE
 		   	  USER_ID = #{userId}
 	</update>
+	
+	<select id="idcheck" parameterType="string" resultType="_int">
+		SELECT
+			  COUNT(*)
+		  FROM
+		  	  MEMBER
+		 WHERE
+		 	  USER_ID = #{checkId}
+	
+	</select>
+	
+	
+	
 </mapper>

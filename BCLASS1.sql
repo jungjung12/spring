@@ -57,3 +57,24 @@
       AND
           BOARD_CONTENT LIKE '%' || 'u' || '%'
       
+      
+      -- 사진 게시판 목록 조회
+      
+      SELECT
+            CHANGE_NAME,
+            BOARD_TITLE,
+            USER_NAME,
+            BOARD_CONTENT,
+            CREATE_DATE
+       FROM
+            BOARD, MEMBER
+      WHERE
+            BOARD.BOARD_WRITER = MEMBER.USER_ID
+        AND
+            CHANGE_NAME IS NOT NULL
+      ORDER
+         BY
+            BOARD_NO DESC;
+            
+            
+delete from board where BOARD_TITLE = 'jjjjjjj';

@@ -102,8 +102,6 @@ public class NoticeController {
 		
 		//log.info("입력한 정보 : {}", notice);
 		
-		noticeService.insert(notice);
-		
 		if(noticeService.insert(notice) > 0) {
 			
 			session.setAttribute("alertMsg", "추가 성공");

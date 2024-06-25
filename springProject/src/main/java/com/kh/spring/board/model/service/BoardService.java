@@ -13,19 +13,15 @@ public interface BoardService {
 	int boardCount();
 	
 	//게시들 목록 조회
-	
 	List<Board> findAll(Map <String, Integer> map);
 	
 	//검색 기능
-	
 	int searchCount(Map<String, String> map);
 	
 	//검색 목록 조회
-	
 	List<Board> findByConditionAndKeyword(Map <String, String> map, RowBounds rowBounds);
 	
 	//게시글 작성
-	
 	int insert(Board board);
 	
 	//게시글 상세보기 > 게시글을 클릭하는 순간 게시글이 삭제되어 실패할 수 있음
@@ -33,16 +29,16 @@ public interface BoardService {
 	int increaseCount(int boardNo);
 	
 	//게시글 상세 조회
-	
 	Board findById(int boardNo);
 	
 	//게시글 수정
-	
 	int update(Board board);
 	
 	//게시글 삭제
-	
 	int deleteById(int boardNo);
+	
+	//이미지 게시글 전체 조회
+	List selectImages();
 	
 	/* 댓글 기능 */
 	
