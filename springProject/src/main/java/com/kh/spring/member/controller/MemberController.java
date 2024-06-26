@@ -188,7 +188,7 @@ public class MemberController {
 		}
 	}
 	
-	@GetMapping("delete.do")
+	@PostMapping("delete.do")
 	public String delete(Member member, HttpSession session, Model model) {
 		
 		//입력한 비밀번호 값이 맞는지 검증
