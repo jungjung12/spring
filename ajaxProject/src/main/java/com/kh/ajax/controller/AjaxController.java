@@ -1,13 +1,16 @@
 package com.kh.ajax.controller;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
+import com.kh.ajax.model.vo.Menu;
 
 @Controller
 public class AjaxController {
@@ -62,4 +65,136 @@ public class AjaxController {
 		
 		return String.valueOf(price);
 	}
-}
+	
+	@ResponseBody
+	@GetMapping(value="ajax2.do", produces="application/json; charset=UTF-8")
+	public String selectMenu(int menuNumber) {
+		//요청 처리를 잘 했다는 가정 하에 데이터 응답
+		
+		/*
+		 * DB에 존재하는 메뉴 테이블
+		 * 
+		 * | 메뉴번호  |  메뉴이름  |  가격   |  재료  |
+		 * |    1    |  순두부   |  9000  | 순두부  |
+		 * 
+		 * 
+		 * */
+		
+		//JSON(Java Script Object Notation)
+		
+		Menu menu = new Menu(1, "순찌", 9000, "순두부");
+		
+		/*
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("{");
+		sb.append("\"menuNumber\" : " + "'" + menu.getMenuNumber() + "', ");
+		sb.append("\"menuName\" : " + "'" + menu.getMenuName() + "', ");
+		sb.append("\"price\" : " + "'" + menu.getPrice() + "', ");
+		sb.append("\"material\" : " + "'" + menu.getMaterial() + "', ");
+		sb.append("}");
+		
+		return sb.toString();
+		*/
+		
+		/*
+		 * {material: '순두부',
+		 * 	menuNumber: 1,
+		 * 	price: 9000,
+		 * 	menuName: '순찌'}
+		 * 
+		 * VO의 필드명이 키값이 됨
+		 * */
+		
+		JSONObject jobj = new JSONObject();
+		
+		jobj.put("menuNumber", menu.getMenuNumber());
+		jobj.put("menuName", menu.getMenuName());
+		jobj.put("price", menu.getPrice());
+		jobj.put("material", menu.getMaterial());
+		
+		//key-value 형태로 값을 저장하며 메소드 put을 호출하여 추가한다 = map과 동일 // JSONObject = Map
+		
+		return jobj.toJSONString();
+	}
+	
+	@ResponseBody
+	@GetMapping(value="ajax3.do", produces="application/json; charset=UTF-8")
+	public Menu ajax3Method(int menuNumber) {
+		Menu menu = new Menu(1, "순찌", 9000, "순두부");
+		
+		return menu;
+		
+		/*
+		Gson이 아래 작업을 대신 해줌 -> 하위 버전은 호환x
+		
+		jobj.put("menuNumber", menu.getMenuNumber());
+		jobj.put("menuName", menu.getMenuName());
+		jobj.put("price", menu.getPrice());
+		jobj.put("material", menu.getMaterial());
+		
+		 * */
+	}
+	
+	@ResponseBody
+	@GetMapping("find.do")
+	public String findAll() {
+		
+		List<Menu> menus = new ArrayList();
+
+		//selectList의 결과가 menus에 담겨있다고 가정.
+		//List<Menu> list = MenuService.findAll();
+		menus.add(new Menu(1, "순찌", 9000, "순두부"));
+		menus.add(new Menu(2, "김찌", 8000, "김치"));
+		menus.add(new Menu(3, "된찌", 8000, "된장"));
+
+		//key-vlaue 형태의 객체 3개를 한번에 보내기 위해 배열에 담아 JSON으로 전달
+		
+		JSONObject jobj1 = new JSONObject();
+		
+		jobj1.put("menuNumber", menus.get(0).getMenuNumber());
+		jobj1.put("menuName", menus.get(0).getMenuName());
+		jobj1.put("price", menus.get(0).getPrice());
+		jobj1.put("material", menus.get(0).getMaterial());
+		
+		JSONObject jobj2 = new JSONObject();
+		
+		jobj2.put("menuNumber", menus.get(0).getMenuNumber());
+		jobj2.put("menuName", menus.get(0).getMenuName());
+		jobj2.put("price", menus.get(0).getPrice());
+		jobj2.put("material", menus.get(0).getMaterial());
+		
+		JSONObject jobj3 = new JSONObject();
+		
+		jobj3.put("menuNumber", menus.get(0).getMenuNumber());
+		jobj3.put("menuName", menus.get(0).getMenuName());
+		jobj3.put("price", menus.get(0).getPrice());
+		jobj3.put("material", menus.get(0).getMaterial());
+		
+		//배열로는 객체의 전송이 불가능함
+		//List로는 JSON이 자바스크립트의 형태로 변환시킬 수 없음, 해당 작업을 가능하게 해 주는 것이 JSONArray
+		
+		JSONArray jArr = new JSONArray();
+		
+		/*
+		jArr.add(jobj1);
+		jArr.add(jobj2);
+		jArr.add(jobj3);
+		*/
+		
+		/*
+		for(int i=0;i<menus.size();i++) {
+			JSONObject jobj = new JSONObject();
+			jobj.put("menuNumber", menus.get(i).getMenuNumber());
+			jobj.put("menuName", menus.get(i).getMenuName());
+			jobj.put("price", menus.get(i).getPrice());
+			jobj.put("material", menus.get(i).getMaterial());
+			
+			jArr.add(jobj);
+		*/
+		//Gson이 위의 작업을 대체
+		return new Gson().toJson(menus);
+		}
+		
+		
+	}

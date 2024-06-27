@@ -121,8 +121,134 @@
 			
 		}
 	
+	</script>
+	
+	<h3>DB에서 SELECT를 이용해 조회했다는가정 하에 VO객체를 응답받아서 화면 상에 출력</h3>
+	
+	조회할 음식 번호 : <input type="number" id="menuNo" /> <br><br>
+	
+	<button id="select-btn">조회</button>
+	
+	<div id="menu">
+	
+	</div>
+	
+	<script>
+	
+		window.onclick =()=> {
+			//document.getElementById('select-btn') : 이벤트 타깃
+			//onclick : 발생시킬 이벤트
+			//=()=> : 이벤트 핸들러
+			document.getElementById('select-btn').onclick =()=> {
+				
+				$.ajax({
+					// url : 'ajax2.do',
+					url : 'ajax3.do',
+					type : 'get',
+					data : {
+						menuNumber : document.getElementById('menuNo').value
+					},
+					success : result => {
+						console.log(result);
+						// 자바 스크립트에서 읽을 수 있는 형태로 파싱
+						const obj = {
+							"menuNumber" : "1",
+							"menuName" : "순찌",
+							"price" : "9000",
+							"material" : "순두부"
+						};
+						
+						console.log(obj);
+						
+						const menu = '<ul> 오늘의 메뉴 :'
+								   + '<li>' + result.manuName + '</li>'
+								   + '<li>' + result.price + '</li>'
+								   + '<li>' + result.material + '</li>'
+								   + '</ul>'
+								   
+						document.getElementById('menu').innerHTML = menu;
+					},
+					error : e => {
+						console.log(e);
+					}
+						
+				});
+				
+			};
+		}
+	</script>
+	
+	<br>
+	<hr>
+	<br>
+	
+	<h3>조회 후 리스트를 응답받아 출력</h3>
+	
+	<button onclick="findAll()">메뉴 전체 조회</button>
+	
+	<table boarder="1" id="find-result">
+		<thead>
+			<tr>
+				<th>메뉴명</th>
+				<th>가격</th>
+				<th>재료</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+		
+		</tbody>
+	</table>
+	
+	<script>
+		function findAll() {
+			$.ajax({
+				url : 'find.do',
+				type : 'get',
+			
+			success : result => {
+				console.log(result);
+				console.log(result[0]); //객체에 접근
+				console.log(result[0].menuName); //객체의 특정 요소에 접근
+				
+				//이게 정석이라니......
+				// JSON 형태로 온 데이터를 출력 요소를 이용해 화면에 띄우는 작업
+				
+				const tbodyEl = document.createElement('tbody');
+				
+				result.map((o, i) => {
+					
+				const trEl = document.createElement('tr');
+				// console.log(trEl);
+				
+				const tdFirst = document.createElement('td');
+				const firstText = document.createTextNode(result[0].menuName);
+				tdFirst.style.width = '200px';
+				tdFirst.appendChild(firstText);
+				
+				const tdSecond = document.createElement('td');
+				const secondText = document.createTextNode(result[0].price);
+				tdSecond.style.width = '200px';
+				tdSecond.appendChild(secondText);
+				
+				const tdThird = document.createElement('td');
+				const thirdText = document.createTextNode(result[0].amterial);
+				tdThird.style.width = '100px';
+				tdThird.appendChild(thirdText);
+				
+				trEl.appendChild(tdFirst);
+				trEl.appendChild(tdSecond);
+				trEl.appendChild(tdThird);
+				
+				tbodyEl.appendChild(trEl);
+				
+				});
+				};
+			});
+		}
 	
 	</script>
+	
+	
 	
 	
 	

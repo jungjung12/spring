@@ -10,6 +10,7 @@
   	<typeAlias type="com.kh.spring.member.model.vo.Member" alias="member"/>
   	<typeAlias type="com.kh.spring.board.model.vo.Board" alias="board"/>
   	<typeAlias type="com.kh.spring.notice.model.vo.Notice" alias="notice"/>
+  	<typeAlias type="com.kh.spring.board.model.vo.Reply" alias="reply"/>
   </typeAliases>
   <mappers>
   	<mapper resource="/mapper/memberMapper.xml"/>

@@ -77,7 +77,7 @@
                 	</c:when>
                 	<c:otherwise>
 	                	<c:forEach items="${ list }" var="board">
-	                		<tr class="board-detail" id="board-${board.boardNo }">
+	                		<tr class="board-detail" id="boardNo-${board.boardNo }">
 		                 		<td>${board.boardNo }</td>
 		                 		<td>${board.boardTitle }</td>
 		                 		<td>${board.boardWriter }</td>
@@ -109,7 +109,7 @@
 						// 각각의 제공하는 메소드를 사용하려면 지정 방식도 동일해야 함
 						
 						// console.log($(e.currentTarget).children().eq(0).text());
-						location.href = 'board-detail?boardNo= ' + e.currentTarget.id.split('-')[1];
+						location.href = 'board-detail?boardNo=' + e.currentTarget.id.split('-')[1];
 						
 					});
 				})
