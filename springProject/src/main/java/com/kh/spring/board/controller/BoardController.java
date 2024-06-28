@@ -386,7 +386,7 @@ public class BoardController {
 	@ResponseBody
 	@GetMapping(value="reply", produces = "application/json; charset=UTF-8")
 	public String selectReply(int boardNo) {
-		
+ 		
 		return new Gson().toJson(boardService.selectReply(boardNo));
 	}
 	
@@ -395,6 +395,13 @@ public class BoardController {
 	public String saveReply(Reply reply) {
 		
 		return boardService.insertReply(reply) > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@GetMapping("board-reply")
+	public Board boardAndReply(int boardNo) {
+		
+		return boardService.boardAndReply(boardNo);
 	}
 	
 }

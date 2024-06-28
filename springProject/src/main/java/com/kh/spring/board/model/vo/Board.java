@@ -1,5 +1,7 @@
 package com.kh.spring.board.model.vo;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,4 +22,7 @@ public class Board {
 	private int count;
 	private String createDate;
 	private String status;
+	
+	//댓글과 함께 보회하기 위해 replyList를 추가
+	private List<Reply> replyList;
 }

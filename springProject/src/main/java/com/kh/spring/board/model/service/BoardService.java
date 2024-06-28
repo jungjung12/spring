@@ -48,6 +48,13 @@ public interface BoardService {
 	
 	//댓글작성 
 	int insertReply(Reply reply);
+
+	//게시글 상세보기 시 댓글과 함께 조회
+	
+	Board boardAndReply(int boardNo);
+
+	//상위 5개만 출력 
+	List<Board> findTopFiveBoard();
 	
 	//Mybatis를 이용한 댓글 조회
 	

@@ -17,3 +17,14 @@
 6월 25, 2024 16:36:45.85 [2900:2652:0625/163645.085:ERROR:interface_endpoint_client.cc(722)] Message 0 rejected by interface blink.mojom.WidgetHost
 6월 25, 2024 17:02:05.39 [2900:2652:0625/170205.039:ERROR:interface_endpoint_client.cc(722)] Message 1 rejected by interface blink.mojom.WidgetHost
 6월 25, 2024 17:53:54.917 [2900:2652:0625/175354.917:ERROR:interface_endpoint_client.cc(722)] Message 1 rejected by interface blink.mojom.WidgetHost
+
+6월 28, 2024 15:08:30.593 NEW SESSION
+6월 28, 2024 15:08:30.593 Created TensorFlow Lite XNNPACK delegate for CPU.
+6월 28, 2024 16:15:15.525 [11644:1900:0628/161515.525:ERROR:interface_endpoint_client.cc(722)] Message 1 rejected by interface blink.mojom.WidgetHost
+6월 28, 2024 17:24:46.692 [11644:1900:0628/172446.692:ERROR:device_event_log_impl.cc(196)] [17:24:46.692] Bluetooth: bluetooth_adapter_winrt.cc:1056 Getting Default Adapter failed.
+6월 28, 2024 17:32:43.909 [11644:1900:0628/173243.909:ERROR:interface_endpoint_client.cc(722)] Message 1 rejected by interface blink.mojom.WidgetHost
+6월 28, 2024 17:47:56.912 [11644:984:0628/174756.912:ERROR:cert_verify_proc_builtin.cc(1051)] CertVerifyProcBuiltin for www.pilotpen.co.kr failed:
+6월 28, 2024 17:47:56.912 ----- Certificate i=0 (O=Default Company Ltd,L=Default City,C=XX) -----
+6월 28, 2024 17:47:56.912 ERROR: No matching issuer found
+6월 28, 2024 17:47:56.912 
+6월 28, 2024 17:47:56.912 
