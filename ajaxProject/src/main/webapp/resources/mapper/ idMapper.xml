@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapper namespace="idMapper">
+
+<select id="isEmailExist" parameterType="string">
+
+select user_id from member where id = #{id}
+
+</select>
+
+</mapper>
