@@ -46,7 +46,7 @@
 	
 		$(() => {
 			//동적인 요소에 이벤트 부여 -> on 메소드 사용  |  이벤트 타깃으로 지정하고 싶은 상위요소 지정 - 주로 document
-			// on('이벤트 달기', '이벤트를 주고 싶은 것의 상위 요소의 하위 요소')
+			// on('이벤트 달기', '이벤트를 주고 싶은 것의 상위 요소 : 상위 요소를 선택해 하위 요소까지 이벤트를 줄 수 있음')
 			$(document).on('click', '#boardList > tbody > tr', e => {
 				
 				const boardNo = $(e.currentTarget).children().eq(0).text();

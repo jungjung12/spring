@@ -5,7 +5,7 @@
 <mapper namespace="com.kh.spring.notice.model.dao.NoticeMapper">
 <!-- 패키지 경로 + dao 인터페이스명 -->
 	
-	<select id="findAll" resultType="notice">
+	<sql id="selectNotice">
 	
 		SELECT
 			  NOTICE_NO noticeNo,
@@ -15,10 +15,45 @@
 			  CREATE_DATE createDate
 		 FROM
 		 	  NOTICE
+	</sql>
+	
+	<select id="findAll" resultType="notice">
+	<include refid="selectNotice" />
 		 ORDER
 		   BY
 		   	  NOTICE_NO DESC
 	
 	</select>
 
+	<select id="findById" parameterType="_int" resultType="notice">
+	<include refid="selectNotice" />
+	   WHERE
+	   		NOTICE_NO = #{noticeNo}
+	</select>
+	
+	<insert id="save" parameterType="notice">
+		INSERT
+		  INTO
+		  	  NOTICE
+	    VALUES
+			  (
+			  SEQ_NNO.NEXTVAL,
+			  #{noticeTitle},
+			  #{noticeWriter},
+			  #{noticeContent},
+			  SYSDATE
+			  )
+	</insert>
+	
+	
+	
+	<delete id="delete" parameterType="_int">
+		DELETE
+			  NOTICE
+		 WHERE
+		 	  NOTICE_NO = #{noticeNo}	  
+	
+	</delete>
+	
+	
 </mapper>

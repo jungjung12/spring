@@ -21,13 +21,13 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Notice findById(int NoticeNo) {
-		return null;
+	public Notice findById(int noticeNo) {
+		return noticeMapper.findById(noticeNo);
 	}
 
 	@Override
 	public int save(Notice notice) {
-		return 0;
+		return noticeMapper.save(notice);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int delete(int NoticeNo) {
-		return 0;
+		return noticeMapper.delete(NoticeNo);
 	}
 
 	/*

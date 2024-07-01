@@ -4,7 +4,10 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +58,62 @@ public class NoticeController {
 			
 			return ResponseEntity .status(HttpStatus.OK).body(responseMsg);
 		}
-				
+		
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Message> findById(@PathVariable int noticeNo) {
+		
+		Notice notice = noticeService.findById(noticeNo);
+		
+		if(notice == null) {
+			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Message.builder().message("조회 결과 없음").build());
+			
+		} else {
+			
+			Message responseMsg = Message.builder().message("조회 요청 성공").data(notice).build();
+			
+			return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
+					
+					
+		}
+		
+	}
+	
+	@PostMapping
+	public ResponseEntity<Message> save(Notice notice) {
+		
+		// log.info("잉 : {}", notice);
+		
+		// 값이 입력되지 않았으면 작성자에게 보여줄 메세지
+		if("".equals(notice.getNoticeTitle()) || "".equals(notice.getNoticeContent()) || "".equals(notice.getNoticeWriter())) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.builder().message("서비스 요청 실패").data("필수 파라미터 값 누락").build());
+		}
+		
+		int result = noticeService.save(notice);
+		
+		if(result == 0 ) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.builder().message("추가 실패").build());
+		} else {
+		Message responseMsg = Message.builder().data("공지사항 추가 성공").message("서비스 요청 성공").build();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
+		}
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Message> deleteById(@PathVariable int noticeNo) {
+		
+		int result = noticeService.delete(noticeNo);
+		
+		if(result == 0) {
+			return ResponseEntity.status(HttpStatus.OK).body(Message.builder().message("게시글이 존재하지 않음").build());
+		}
+		Message response = Message.builder().data("삭제 성공").message("서비스 요청 성공").build();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+
 	}
 	
 }

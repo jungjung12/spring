@@ -16,11 +16,11 @@ public interface NoticeService {
 
 	List<Notice> findAll();
 	
-	Notice findById(int NoticeNo);
+	Notice findById(int noticeNo);
 	
 	int save(Notice notice);
 	
-	int update(Notice nitice);
+	int update(Notice notice);
 	
-	int delete(int NoticeNo);
+	int delete(int noticeNo);
 }
